@@ -36,9 +36,9 @@ The model is built in Python with inputs and outputs read and written to excel s
 
 The **dispatch of technologies is done in according to their marginal costs** which have been specified *not* to reflect actual costs but rather to simply ensure the proper behaviour of these technologies and their **dispatch in the expected merit order.**
 
-The model optimises the dispatch of technologies by seeking to minimise the total system cost. Broadly speaking this is the sum, over all time periods $t$ and over all technologies $i$ at each node $k$ on the network, of the cost of each generator $C_{t, k, i}$ given by the power dispatched $p_{t, k, i}$ multiplied by the marginal cost of that power $c_{t, k, i}$. (PyPSA is a very flexible package, for example we have used time-varying price dependent costs associated with charging and discharge of storage technologies. Further custom costs can be defined.) The optimisation is made by varying the dispatched power parameters $p_{t, k, i}$ and it the resultant set of optimised parameters that defines an instance of a trained model which can be further analysed and its performance measured.
+The model optimises the dispatch of technologies by seeking to minimise the total system cost. Broadly speaking this is the sum, over all time periods $t$ and over all technologies $i$ at each node $k$ on the network, of the cost of each generator $C_{t, k, i}$ given by the power dispatched $p_{t, k, i}$ multiplied by the marginal cost of that power $c_{t, k, i}$. The optimisation is made by varying the dispatched power parameters $p_{t, k, i}$ and it is the resultant set of optimised parameters that defines an instance of a trained model which can be further analysed and its performance measured.
 
-The problem of optimised dispatch of power on a network is a constrained problem. At every node available power must meet the demand load, similarly the flow of power around the system is constrained by various physical electrical laws pertaining to voltage, current and power balances. This model and many others in the literature approximate these laws as linear constraints. The resulting problem is called the **Linear Optimal Power Flow (LOPF)** problem and is a linear optimisation problem. In this project this problem is solved using the linear solver [HiGHS](https://highs.dev).
+The task of optimising dispatch of power on a network is a constrained problem. At every node available power must meet the demand load, similarly the flow of power around the system is constrained by various physical electrical laws pertaining to voltage, current and power balances. This model and many others in the literature approximate these laws as linear constraints. The resulting problem is called the **Linear Optimal Power Flow (LOPF)** problem and is a linear optimisation problem. In this project this problem is solved using the linear solver [HiGHS](https://highs.dev).
 
 **In fact, two versions of the optimisation are carried out for any given model.** The **first is the one described above, a pure dispatch problem**, where power is dispatched to meet demand on a constrained network. We also use PyPSA to carry out a **second alternative optimisation where both the power dispatch and the capacity of the lines in the model are optimised**. This typically leads to lines (aka boundaries) having their capacity extended in order to avoid constraints on the network. (A side effect is that the model will also reccomend reducing capacity for lines which are under utilised, this has no effect on power flow and we ignore this side effect.) The results of the two optimisations may be compared to judge the effect of constraints versus no constraints.
 
@@ -115,11 +115,7 @@ Below are the technologies modelled, listed in a rough merit order. Each technol
 
    For this version of the model the hyper parameters e.g. marginal costs have remained fixed to the values which we validated with the 2023 baseline.
 
-   The performance/behaviour of the model at forecasting can be roughly gauged by comaring predictions for the key metrics described above to those made in the CP30 FF&R pathway thanks to NESO's modelling. Noting that NESO's modelling is NOT the ground truth. No tuning of model to CP30 outputs however.
-
-#### NESO Outputs
-
-The outputs of the above models should be compared to the NESO CP30 outputs (e.g. generation, im/exports, storage usage, curtasilemetn) summarised in 'background_references/GB_outputs_NESO.xlsx'.
+   The performance/behaviour of the model at forecasting can be roughly gauged by comaring predictions for the key metrics described above to those made in the CP30 FF&R pathway thanks to NESO's modelling. Noting that NESO's modelling is NOT the ground truth, rather this comparison is a comparison between two differing forecasts. We mkae a simple comparison between these 2030 predictions and **never** tune the model to CP30 outputs.
 
 ***
 ***
