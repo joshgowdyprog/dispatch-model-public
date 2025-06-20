@@ -1,5 +1,5 @@
 # <span style="color:rgb(114, 182, 114);">**Dispatch Model - Public**</span>
-This is the *public version* of the repo for an in-house GB Power Dispatch Model I built for Regen. This public version only contains the read-me/guide for the project. The code and detailed results of this project are housed elsewhere in a private repo.
+This is the *public version* of the repo for an in-house GB Power Dispatch Model I built for Regen. This public version only contains the readme/guide for the project. The code and detailed results of this project are housed elsewhere in a private repo.
 
 ***
 ***
